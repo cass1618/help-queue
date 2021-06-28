@@ -1,17 +1,23 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-function Ticket() {
-    const user1 = "Jason";
-    const user2 = "Elanor"
-
+function Ticket(props) {
+    
     return (
         <React.Fragment>
-            <h3>3a</h3>
-            <h3>{user1} and {user2}</h3>
-            <p><em>We don't belong here!!</em></p>
+            <h3>{props.location}</h3>
+            <h3>{props.user1} and {props.user2}</h3>
+            <p><em>{props.issue}</em></p>
             <hr/>
         </React.Fragment>
     );
+}
+
+Ticket.propTypes = {
+    user1: PropTypes.string.isRequired,
+    user2: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    issue: PropTypes.string.isRequired
 }
 
 export default Ticket;

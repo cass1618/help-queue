@@ -1,5 +1,5 @@
 import React from "react";
-import Head from "./Header";
+import Header from "./Header";
 import TicketList from "./TicketList"
 
 function App() {
