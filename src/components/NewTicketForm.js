@@ -1,14 +1,17 @@
 import React from "react";
 import { v4 } from "uuid";
+import PropTypes from "prop-types";
 
-function NewTicketForm() {
+function NewTicketForm(props) {
     function handleNewTicketFormSubmission(event) {
         event.preventDefault();
-        console.log(event.target.user1.value); //grabs the values from submit event
-        console.log(event.target.user2.value);
-        console.log(event.target.location.value);
-        console.log(event.target.issue.value);
+        props.onNewTicketCreation({user1: event.target.user1.value, user2: event.target.user2.value, location: event.target.location.value, issue: event.target.issue.value, id: v4}); // props instead of this because it's function rather than class component!
+        //onNewTicketCreation is a callback function! defined in TicketControl
     }
+
+    NewTicketForm.propTypes = {
+        onNewTicketCreation: PropTypes.func
+    };
 
     return (
         <React.Fragment>
