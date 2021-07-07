@@ -1,6 +1,7 @@
 export default (state = {}, action) => {
     const {user1, user2, location, issue, id} = action;
     switch(action.type) {
+        
         case "ADD_TICKET":
             return Object.assign({}, state, {
                 [id]: {
@@ -11,7 +12,13 @@ export default (state = {}, action) => {
                     id: id
                 }
             });
-            default: 
-                return state;
+
+        case "DELETE_TICKET":
+            let newState = {...state};
+            delete newState[id];
+            return newState;
+
+        default: 
+            return state;
     }
 };
