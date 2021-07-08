@@ -17,13 +17,23 @@ describe("help queue actions", () => {
     });
 
     it('addTicket should create ADD_TICKET action', () => {
-        expect(actions.addTicket({user1: 'Jo', user2: 'Jasmine', location: '3E', issue: 'Redux not working!', id: 1})).toEqual({
+        expect(actions.addTicket({user1: 'Jo', user2: 'Jasmine', location: '3E', issue: 'Redux not working!',  timeOpen: 0, formattedWaitTime: "A few seconds", id: 1})).toEqual({
             type: c.ADD_TICKET,
             user1: 'Jo', 
             user2: 'Jasmine',
             location: '3E',
-            issue: 'Redux not working!',
-            id: 1
+            timeOpen: 0,
+            id: 1,
+            formattedWaitTime: "A few seconds",
+            issue: 'Redux not working!'
+        });
+    });
+
+    it('updateTime should create UPDATE_TIME action', () => {
+        expect(actions.updateTime(1, "A few seconds")).toEqual({
+            type: c.UPDATE_TIME,
+            id: 1,
+            formattedWaitTime: "A few seconds"
         });
     });
 });

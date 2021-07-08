@@ -1,14 +1,17 @@
 import ticketListReducer from "../../reducers/ticket-list-reducer";
 import * as c from './../../actions/ActionTypes';
+import Moment from 'moment';
 
 describe("ticketListReducer", () => {
 
     let action;
+
     const ticketData = {
         user1: "Elanor",
         user2: "Jason",
         location: "The Good Place",
         issue: "We don't belong here!",
+        timeOpen: 0,
         id: 1
     };
 
@@ -66,4 +69,49 @@ describe("ticketListReducer", () => {
             id: 2},
         });
     });
+
+    test('Should add a formatted wait time to ticket entry', () => {
+        const { user1, user2, location, issue, timeOpen, id } = ticketData;
+            action = {
+            type: c.UPDATE_TIME,
+            formattedWaitTime: '4 minutes',
+            id: id
+            };
+            expect(ticketListReducer({[id] : ticketData}, action)).toEqual({
+            [id] : {
+                user1: user1,
+                user2: user2,
+                location: location,
+                issue: issue,
+                timeOpen: timeOpen,
+                id: id,
+                formattedWaitTime: '4 minutes'
+            }
+        });
+    });
+
+    test('should successfully add a ticket to the ticket list that includes Moment-formatted wait times', () => {
+        const { names, location, issue, timeOpen, id } = ticketData;
+        action = {
+            type: 'ADD_TICKET',
+            names: names,
+            location: location,
+            issue: issue,
+            timeOpen: timeOpen,
+            id: id,
+            formattedWaitTime: new Moment().fromNow(true)
+        };
+        expect(ticketListReducer({}, action)).toEqual({
+            [id] : {
+                names: names,
+                location: location,
+                issue: issue,
+                timeOpen: timeOpen,
+                id: id,
+                formattedWaitTime: 'a few seconds'
+            }
+        });
+    });   
+
+
 });

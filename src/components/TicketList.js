@@ -13,7 +13,7 @@ function TicketList(props) {
             user2 = {ticket.user2}
             location={ticket.location}
             issue={ticket.issue}
-            // formattedWaitTime={ticket.formattedWaitTime}
+            formattedWaitTime={ticket.formattedWaitTime}
             id={ticket.id}
             key={ticket.id}/>
             

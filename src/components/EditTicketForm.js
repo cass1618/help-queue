@@ -7,7 +7,7 @@ function EditTicketForm (props) {
 
   function handleEditTicketFormSubmission(event) {
     event.preventDefault();
-    props.onEditTicket({user1: event.target.user1.value, user2: event.target.user2.value, location: event.target.location.value, issue: event.target.issue.value, id: ticket.id});
+    props.onEditTicket({user1: event.target.user1.value, user2: event.target.user2.value, location: event.target.location.value, issue: event.target.issue.value, id: ticket.id, timeOpen: ticket.timeOpen, formattedWaitTime: ticket.formattedWaitTime});
   }
 
   return (
