@@ -19,7 +19,7 @@ Ticket.propTypes = {
     user1: PropTypes.string.isRequired,
     user2: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
-    issue: PropTypes.string.isRequired,
+    issue: PropTypes.string,
     id: PropTypes.string,
     whenTicketClicked: PropTypes.func
 };
