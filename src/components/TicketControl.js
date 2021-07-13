@@ -6,6 +6,7 @@ import EditTicketForm from './EditTicketForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import * as a from './../actions';
+import {withFirestore} from "react-redux-firebase";
 
 class TicketControl extends React.Component {
 
@@ -63,10 +64,18 @@ class TicketControl extends React.Component {
     }
 
     handleChangingSelectedTicket = (id) => {
-        console.log("handle changing selected")
-        const selectedTicket = this.props.masterTicketList[id];
-        console.log("change ticket to: " + selectedTicket);
-        this.setState({ selectedTicket: selectedTicket });
+
+        this.props.firestore.get({collection: "tickets", doc: id}).then((ticket) => {
+
+        const firestoreTicket = {
+            user1: ticket.get("user1"),
+            user2: ticket.get("user2"),
+            location: ticket.get("location"),
+            issue: ticket.get("issue"),
+            id: ticket.id
+        }
+        this.setState({ selectedTicket: firestoreTicket });
+        });
     }
 
     handleDeletingTicket = (id) => {
@@ -145,4 +154,4 @@ const mapStateToProps = state => {
 
 TicketControl = connect(mapStateToProps)(TicketControl);
 
-export default TicketControl;
+export default withFirestore(TicketControl);
