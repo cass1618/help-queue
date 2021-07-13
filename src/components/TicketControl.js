@@ -63,9 +63,7 @@ class TicketControl extends React.Component {
     }
 
     handleChangingSelectedTicket = (id) => {
-        console.log("handle changing selected")
         const selectedTicket = this.props.masterTicketList[id];
-        console.log("change ticket to: "+selectedTicket);
         this.setState({selectedTicket: selectedTicket});
     }
 
@@ -104,12 +102,11 @@ class TicketControl extends React.Component {
             buttonText = "Return to Ticket List";
 
         } else if (this.state.selectedTicket != null) {
-            console.log("else if 2");
             currentlyVisibleState = <TicketDetail ticket ={this.state.selectedTicket}
             onClickingDelete = {this.handleDeletingTicket} 
             onClickingEdit = {this.handleEditClick} />
             buttonText = "Return To Ticket List";
- 
+
         } else if (this.props.formVisibleOnPage) {
             currentlyVisibleState = <NewTicketForm onNewTicketCreation = {this.handleAddingNewTicketToList}/>;
             buttonText = "Return to Ticket List"; 
