@@ -11,7 +11,7 @@ function NewTicketForm(props) {
     function addTicketToFirestore(event) {
         event.preventDefault();
         props.onNewTicketCreation();
-        return firestore.collection('tickets').add(
+        return firestore.collection("tickets").add(
             {
                 user1: event.target.user1.value,
                 user2: event.target.user2.value,
@@ -21,10 +21,6 @@ function NewTicketForm(props) {
             }
         );
     }
-
-    // NewTicketForm.propTypes = {
-    //     onNewTicketCreation: PropTypes.func
-    // };
 
     return (
         <React.Fragment>

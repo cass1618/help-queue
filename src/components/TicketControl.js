@@ -18,29 +18,29 @@ class TicketControl extends React.Component {
         };
     };
 
-    componentDidMount() {
-        this.waitTimeUpdateTimer = setInterval(() =>
-            this.updateTicketElapsedWaitTime(),
-            60000
-        );
-    }
+    // componentDidMount() {
+    //     this.waitTimeUpdateTimer = setInterval(() =>
+    //         this.updateTicketElapsedWaitTime(),
+    //         60000
+    //     );
+    // }
 
-    componentDidUpdate() {
-        console.log("component updated!");
-    }
+    // componentDidUpdate() {
+    //     console.log("component updated!");
+    // }
 
-    componentWillUnmount() {
-        clearInterval(this.waitTimeUpdateTimer);
-    }
+    // componentWillUnmount() {
+    //     clearInterval(this.waitTimeUpdateTimer);
+    // }
 
-    updateTicketElapsedWaitTime = () => {
-        const { dispatch } = this.props;
-        Object.values(this.props.masterTicketList).forEach(ticket => {
-            const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
-            const action = a.updateTime(ticket.id, newFormattedWaitTime);
-            dispatch(action);
-        });
-    }
+    // updateTicketElapsedWaitTime = () => {
+    //     const { dispatch } = this.props;
+    //     Object.values(this.props.masterTicketList).forEach(ticket => {
+    //         const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
+    //         const action = a.updateTime(ticket.id, newFormattedWaitTime);
+    //         dispatch(action);
+    //     });
+    // }
 
     handleClick = () => {
         if (this.state.selectedTicket != null) {
@@ -55,7 +55,7 @@ class TicketControl extends React.Component {
         }
     }
 
-    handleAddingNewTicketToList = (newTicket) => {
+    handleAddingNewTicketToList = () => {
         const { dispatch } = this.props;
         // const action = a.addTicket(newTicket);
         // dispatch(action);
@@ -74,16 +74,12 @@ class TicketControl extends React.Component {
             issue: ticket.get("issue"),
             id: ticket.id
         }
-        this.setState({ selectedTicket: firestoreTicket });
+        this.setState({selectedTicket: firestoreTicket});
         });
     }
 
     handleDeletingTicket = (id) => {
-        const { dispatch } = this.props;
-        const action = a.deleteTicket(id);
-
-        dispatch(action);
-
+        this.props.firestore.delete({collection: "tickets", doc: id});
         this.setState({
             selectedTicket: null
         });
@@ -93,27 +89,23 @@ class TicketControl extends React.Component {
         this.setState({ editing: true });
     }
 
-    // handleEditingTicketInList = (ticketToEdit) => {
-    //     const { dispatch } = this.props;
-    //     const action = a.addTicket(ticketToEdit);
+    handleEditingTicketInList = () => {
+        // this.props.firestore.update({collection: "tickets", doc: id});
 
-    //     dispatch(action);
-
-    //     this.setState({
-    //         editing: false,
-    //         selectedTicket: null
-    //     });
-    // }
+        this.setState({
+            editing: false,
+            selectedTicket: null
+        });
+    }
 
     render() {
         let currentlyVisibleState = null;
         let buttonText = null;
         if (this.state.editing) {
-            currentlyVisibleState = <EditTicketForm ticket={this.state.selectedTicket} onEditTicket={this.handleEditingTicketInList} />
+            currentlyVisibleState = <EditTicketForm ticket={this.state.selectedTicket} onEditTicket={this.handleEditingTicketInList}/>; 
             buttonText = "Return to Ticket List";
 
         } else if (this.state.selectedTicket != null) {
-            console.log("else if 2");
             currentlyVisibleState = <TicketDetail ticket={this.state.selectedTicket}
                 onClickingDelete={this.handleDeletingTicket}
                 onClickingEdit={this.handleEditClick} />
@@ -125,7 +117,7 @@ class TicketControl extends React.Component {
         } else {
             currentlyVisibleState =
                 <TicketList
-                    ticketList={this.props.masterTicketList}
+                    // ticketList={this.props.masterTicketList}
                     onTicketSelection={this.handleChangingSelectedTicket}
                 />
             buttonText = "Add Ticket";
@@ -141,13 +133,13 @@ class TicketControl extends React.Component {
 }
 
 TicketControl.propTypes = {
-    masterTicketList: PropTypes.object,
+    // masterTicketList: PropTypes.object,
     formVisibleOnPage: PropTypes.bool
 };
 
 const mapStateToProps = state => {
     return {
-        masterTicketList: state.masterTicketList,
+        // masterTicketList: state.masterTicketList,
         formVisibleOnPage: state.formVisibleOnPage
     }
 }
