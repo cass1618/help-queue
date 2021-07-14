@@ -1,6 +1,5 @@
 import React from "react";
 import ReusableForm from "./ReusableForm";
-import PropTypes from "prop-types";
 import {useFirestore} from 'react-redux-firebase'
 
 function EditTicketForm(props) {
@@ -29,9 +28,5 @@ return (
     </React.Fragment>
 );
 }
-
-EditTicketForm.propTypes = {
-  onEditTicket: PropTypes.func
-};
 
 export default EditTicketForm;
